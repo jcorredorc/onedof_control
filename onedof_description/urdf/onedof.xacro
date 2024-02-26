@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!-- Revolute Manipulator -->
+<robot name="onedof" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Constants for robot dimensions -->
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:property name="mass" value="1" /> <!-- arbitrary value for mass -->
+  <xacro:property name="width" value="0.1" /> <!-- Square dimensions (widthxwidth) of beams -->
+  <xacro:property name="height1" value="0.50" /> <!-- Link 1 -->
+  <xacro:property name="height2" value="0.50" /> <!-- Link 1 -->
+  <xacro:property name="radius1" value="0.15" /> <!-- Link 2 -->
+  <xacro:property name="length_arm" value="0.80" /> <!-- Link 3 -->
+  <xacro:property name="camera_link" value="0.05" /> <!-- Size of square 'camera' box -->
+  <xacro:property name="axel_offset" value="0.1" /> <!-- Space btw top of beam and the each joint -->
+
+  <!-- Import all Gazebo-customization elements, including Gazebo colors -->
+  <!-- <xacro:include filename="$(find rrbot_description)/urdf/rrbot.gazebo" /> -->
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find onedof_description)/urdf/materials.xacro" />
+
+  <!-- Used for fixing robot to Gazebo 'base_link' -->
+  <link name="world"/>
+
+  <joint name="fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 ${height1/2}"/>
+  </joint>
+
+  <!-- Base Link -->
+  <link name="base_link">
+  
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+	      <!-- <box size="${width} ${width} ${height1}"/> -->
+        <cylinder length = "${height1}" radius="${radius1}" />
+      </geometry>
+      <material name="orange"/>
+    </visual>
+
+  </link>
+
+  <joint name="joint1" type="continuous">
+    <parent link="base_link"/>
+    <child link="link2"/>
+    <origin xyz="0 0 ${height1/2+axel_offset}" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <dynamics damping="0.7"/>
+  </joint>
+
+  <!-- arm Link -->
+  <link name="link2">
+
+    <visual>
+      <origin xyz="0 ${length_arm/2-radius1} 0" rpy="0 0 0"/>
+      <geometry>
+	      <box size="${width} ${length_arm} ${width}"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+
+  </link>
+
+
+</robot>
