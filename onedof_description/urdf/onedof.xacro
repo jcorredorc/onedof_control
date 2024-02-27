@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- Revolute Manipulator -->
+<!-- just one degree of freedom to test ros_control with gazebo and arduino + dynamixel motor -->
 <robot name="onedof" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- Constants for robot dimensions -->
@@ -29,6 +29,13 @@
 
   <!-- Base Link -->
   <link name="base_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+	      <!-- <box size="${width} ${width} ${height1}"/> -->
+        <cylinder length = "${height1}" radius="${radius1}" />
+      </geometry>
+    </collision>
   
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -39,6 +46,15 @@
       <material name="orange"/>
     </visual>
 
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia
+        ixx = "${mass / 12.0 * (3*radius1*radius1 + height1*height1)}" ixy="0.0" ixz="0.0"
+        iyy = "${mass / 12.0 * (3*radius1*radius1 + height1*height1)}" iyz="0.0"
+        izz="${mass / 2.0 * radius1*radius1}"/>
+    </inertial>
+
   </link>
 
   <joint name="joint1" type="continuous">
@@ -47,10 +63,17 @@
     <origin xyz="0 0 ${height1/2+axel_offset}" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
     <dynamics damping="0.7"/>
+    <dynamics friction="0.3"/>
   </joint>
 
   <!-- arm Link -->
   <link name="link2">
+    <collision>
+      <origin xyz="0 0 ${length_arm/2-radius1}" rpy="0 0 0"/>
+      <geometry>
+      	<box size="${width} ${length_arm} ${width}"/>
+      </geometry>
+    </collision>
 
     <visual>
       <origin xyz="0 ${length_arm/2-radius1} 0" rpy="0 0 0"/>
@@ -59,6 +82,15 @@
       </geometry>
       <material name="black"/>
     </visual>
+
+    <inertial>
+      <origin xyz="0 0 ${height2/2 - axel_offset}" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia
+        ixx="${mass / 12.0 * (width*width + width*width)}" ixy="0.0" ixz="0.0"
+        iyy="${mass / 12.0 * (length_arm*length_arm + width*width)}" iyz="0.0"
+        izz="${mass / 12.0 * (length_arm*length_arm + width*width)}"/>
+    </inertial>    
 
   </link>
 
