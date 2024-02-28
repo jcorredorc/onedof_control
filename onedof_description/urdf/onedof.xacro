@@ -14,7 +14,7 @@
   <xacro:property name="axel_offset" value="0.1" /> <!-- Space btw top of beam and the each joint -->
 
   <!-- Import all Gazebo-customization elements, including Gazebo colors -->
-  <!-- <xacro:include filename="$(find rrbot_description)/urdf/rrbot.gazebo" /> -->
+  <xacro:include filename="$(find onedof_description)/urdf/onedof.gazebo" />
   <!-- Import Rviz colors -->
   <xacro:include filename="$(find onedof_description)/urdf/materials.xacro" />
 
@@ -94,5 +94,17 @@
 
   </link>
 
+
+  <!-- Gazebo element to include the actuator -->
+  <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
 
 </robot>
