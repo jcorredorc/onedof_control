@@ -1,0 +1,15 @@
+<launch>
+
+  <!-- Load RQT with a pre-setup GUI for Baxter controls from a perspective file  -->
+  <node name="onedof_rqt" pkg="rqt_gui" type="rqt_gui" respawn="false"
+	output="screen" args="--perspective-file $(find onedof_control)/config/onedof_rqt.perspective"/>
+
+    <node name="PlotJuggler" 
+          pkg="plotjuggler"
+          type="plotjuggler"
+          output="screen"
+          args="--layout $(find onedof_control)/config/onedof_plotjuggler.xml"
+    />
+
+          
+</launch>

@@ -62,14 +62,14 @@
     <child link="link2"/>
     <origin xyz="0 0 ${height1/2+axel_offset}" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <dynamics damping="0.7"/>
+    <dynamics damping="0.0"/>
     <dynamics friction="0.3"/>
   </joint>
 
   <!-- arm Link -->
   <link name="link2">
     <collision>
-      <origin xyz="0 0 ${length_arm/2-radius1}" rpy="0 0 0"/>
+      <origin xyz="0 ${length_arm/2-radius1} 0" rpy="0 0 0"/>
       <geometry>
       	<box size="${width} ${length_arm} ${width}"/>
       </geometry>
