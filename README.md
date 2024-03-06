@@ -25,3 +25,8 @@ mover con rqt_gui y visualizar con plotjuggler, para sintonizar el controlador
 roslaunch onedof_control onedof_rqt.launch
 ```
 
+lanzar todos los paquetes con un comando
+
+```
+rosrun onedof_control onedof_start.sh
+```
